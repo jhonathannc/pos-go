@@ -1,4 +1,4 @@
-module github.com/jhonathannc/fcutils
+module github.com/jhonathannc/pos-go/eventos
 
 go 1.21.5
 
