@@ -42,6 +42,7 @@ func main() {
 		panic(err)
 	}
 	defer dir.Close()
+	uploadControl := make(chan struct{}, 100)
 	for {
 		files, err := dir.ReadDir(1)
 		if err != nil {
@@ -52,18 +53,20 @@ func main() {
 			continue
 		}
 		wg.Add(1)
-		go uploadFile(files[0].Name())
+		uploadControl <- struct{}{}
+		go uploadFile(files[0].Name(), uploadControl)
 	}
 	wg.Wait()
 }
 
-func uploadFile(filename string) {
+func uploadFile(filename string, uploadControl <-chan struct{}) {
 	defer wg.Done()
 	completeFileName := fmt.Sprintf("./tmp/%s", filename)
 	fmt.Printf("Uploading file: %s\n", filename)
 	f, err := os.Open(completeFileName)
 	if err != nil {
 		fmt.Printf("Error opening file: %v\n", err)
+		<-uploadControl
 		return
 	}
 	defer f.Close()
@@ -74,7 +77,9 @@ func uploadFile(filename string) {
 	})
 	if err != nil {
 		fmt.Printf("Error uploading file: %v\n", err)
+		<-uploadControl
 		return
 	}
 	fmt.Printf("File uploaded: %s\n", filename)
+	<-uploadControl
 }
