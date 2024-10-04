@@ -4,6 +4,7 @@ Copyright © 2024 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
+	"github.com/jhonathannc/cli/internal/database"
 	"github.com/spf13/cobra"
 )
 
@@ -17,17 +18,19 @@ and usage of using your command. For example:
 Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
-	Run: func(cmd *cobra.Command, args []string) {
-		db := GetDb()
-		category := GetCategoryDB(db)
+	RunE: runCreate(GetCategoryDB(GetDb())),
+}
 
+func runCreate(categoryDb database.Category) RunEFunc {
+	return func(cmd *cobra.Command, args []string) error {
 		name, _ := cmd.Flags().GetString("name")
 		description, _ := cmd.Flags().GetString("description")
-		_, err := category.Create(name, description)
+		_, err := categoryDb.Create(name, description)
 		if err != nil {
-			panic(err)
+			return err
 		}
-	},
+		return nil
+	}
 }
 
 func init() {
