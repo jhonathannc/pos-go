@@ -1,2 +1,5 @@
 # script do migrate
-migrate 
+migrate
+
+# sqlc binary
+sqlc
