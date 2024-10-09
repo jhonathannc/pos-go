@@ -1,0 +1,13 @@
+download migrate script
+https://github.com/golang-migrate/migrate/tree/master/cmd/migrate
+
+commands
+
+init migrations structure
+./migrate create -ext=sql -dir=sql/migrations -seq init
+
+up migrations
+./migrate -path=sql/migrations -database "mysql://root:root@tcp(localhost:3306)/goexpert" -verbose up
+
+down migrations
+./migrate -path=sql/migrations -database "mysql://root:root@tcp(localhost:3306)/goexpert" -verbose down
