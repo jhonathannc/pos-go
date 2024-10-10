@@ -89,22 +89,31 @@ func main() {
 	}
 	defer dbConn.Close()
 
-	// queries := db.New(dbConn)
+	queries := db.New(dbConn)
 
-	courseArgs := CourseParams{
-		ID:          "1",
-		Name:        "Go Expert",
-		Description: sql.NullString{String: "Go Expert description", Valid: true},
-		Price:       100.0,
-	}
-	categoryArgs := CategoryParams{
-		ID:          "1",
-		Name:        "Backend",
-		Description: sql.NullString{String: "Backend description", Valid: true},
-	}
-	courseDB := NewCourseDB(dbConn)
-	err = courseDB.CreateCourseAndCategory(ctx, categoryArgs, courseArgs)
+	courses, err := queries.ListCourses(ctx)
 	if err != nil {
 		panic(err)
 	}
+	for _, course := range courses {
+		fmt.Printf("Category: %s, Name: %s, Description: %s", course.CategoryName, course.Name, course.Description.String)
+	}
+
+	// courseArgs := CourseParams{
+	// 	ID:          "1",
+	// 	Name:        "Go Expert",
+	// 	Description: sql.NullString{String: "Go Expert description", Valid: true},
+	// 	Price:       100.0,
+	// }
+	// categoryArgs := CategoryParams{
+	// 	ID:          "1",
+	// 	Name:        "Backend",
+	// 	Description: sql.NullString{String: "Backend description", Valid: true},
+	// }
+	// courseDB := NewCourseDB(dbConn)
+	// err = courseDB.CreateCourseAndCategory(ctx, categoryArgs, courseArgs)
+	// if err != nil {
+	// 	panic(err)
+	// }
+
 }
