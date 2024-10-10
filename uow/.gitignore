@@ -1,0 +1,5 @@
+# script do migrate
+migrate
+
+# sqlc binary
+sqlc
