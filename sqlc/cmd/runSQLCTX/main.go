@@ -26,6 +26,7 @@ type CourseParams struct {
 	ID          string
 	Name        string
 	Description sql.NullString
+	Price       float64
 }
 
 type CategoryParams struct {
@@ -65,7 +66,8 @@ func (c *CourseDB) CreateCourseAndCategory(ctx context.Context, argsCategory Cat
 			ID:          argsCourse.ID,
 			Name:        argsCourse.Name,
 			Description: argsCourse.Description,
-			CategoryID:  argsCategory.ID,
+			CategoryID:  argsCourse.ID,
+			Price:       argsCourse.Price,
 		})
 		if err != nil {
 			return err
@@ -93,6 +95,7 @@ func main() {
 		ID:          "1",
 		Name:        "Go Expert",
 		Description: sql.NullString{String: "Go Expert description", Valid: true},
+		Price:       100.0,
 	}
 	categoryArgs := CategoryParams{
 		ID:          "1",
