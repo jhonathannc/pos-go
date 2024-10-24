@@ -3,7 +3,6 @@ package main
 import (
 	"database/sql"
 
-	"github.com/jhonathannc/pos-go/di/product"
 	_ "github.com/mattn/go-sqlite3"
 )
 
@@ -14,8 +13,7 @@ func main() {
 	}
 	defer db.Close()
 
-	repository := product.NewProductRepository(db)
-	useCase := product.NewProductUseCase(repository)
+	useCase := NewUseCase(db)
 
 	product, err := useCase.GetProduct(1)
 	if err != nil {
