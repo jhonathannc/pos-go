@@ -2,7 +2,7 @@ package usecase
 
 import (
 	"github.com/jhonathannc/pos-go/clean-arch/internal/entity"
-	"github.com/jhonathannc/pos-go/clean-arch/internal/events"
+	"github.com/jhonathannc/pos-go/clean-arch/pkg/events"
 )
 
 type OrderInputDTO struct {
