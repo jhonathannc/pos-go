@@ -3,6 +3,7 @@ module github.com/jhonathannc/pos-go/clean-arch
 go 1.21.5
 
 require (
+	github.com/go-chi/chi/v5 v5.1.0
 	github.com/mattn/go-sqlite3 v1.14.24
 	github.com/streadway/amqp v1.1.0
 	github.com/stretchr/testify v1.9.0
